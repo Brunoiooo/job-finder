@@ -4,6 +4,7 @@ import { Job } from "@prisma/client";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { OfferBody } from "./offerBody/OfferBody";
+import { IgnoreBody } from "./ignoreBody/IgnoreBody";
 import { SentBody } from "./sentBody/SentBody";
 
 interface IProps {
@@ -34,7 +35,11 @@ export function JobDataTable({ value }: IProps) {
         header="Sent"
         body={(rowData) => <SentBody row={rowData} />}
       />
-      <Column field="ignored" header="Ignored" />
+      <Column
+        field="ignored"
+        header="Ignored"
+        body={(rowData) => <IgnoreBody row={rowData} />}
+      />
     </DataTable>
   );
 }
