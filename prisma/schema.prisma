@@ -20,7 +20,7 @@ model Job {
   sent      Boolean  @default(false)
   ignored   Boolean  @default(false)
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model UsemeCategories {
@@ -34,7 +34,15 @@ model Prompt {
   content   String
   order     Int
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 
   @@unique([id, source])
+}
+
+model IgnorePrompt {
+  id        BigInt   @id @default(autoincrement())
+  content   String
+  order     Int      @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
