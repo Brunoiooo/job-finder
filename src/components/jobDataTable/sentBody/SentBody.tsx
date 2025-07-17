@@ -21,7 +21,7 @@ export function SentBody({ row }: IProps) {
       setLoading(false);
       router.refresh();
     });
-  }, [row]);
+  }, [row.id]);
 
   return (
     <>
