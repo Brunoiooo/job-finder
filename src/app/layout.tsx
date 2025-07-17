@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
+import "primeflex/primeflex.css";
+import { Menu } from "@/components/menu/Menu";
+import "primeicons/primeicons.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,8 +26,11 @@ export default function RootLayout({
 }>) {
   return (
     <html>
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+      <body className={`${geistSans.variable} ${geistMono.variable} grid`}>
+        <div className="col-12">
+          <Menu />
+        </div>
+        <div className="col-12 px-5">{children}</div>
       </body>
     </html>
   );
