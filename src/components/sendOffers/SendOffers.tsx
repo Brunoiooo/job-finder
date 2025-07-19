@@ -6,7 +6,7 @@ import { PrimeIcons } from "primereact/api";
 import { Button } from "primereact/button";
 import { useCallback, useState } from "react";
 
-export function GenerateOffers() {
+export function SendOffers() {
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
