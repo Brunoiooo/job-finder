@@ -1,7 +1,7 @@
 "use server";
 
 import prismaClient from "@/lib/prismaClient";
-import { IgnoreOffer } from "@/services/ignoreOffer/IgnoreOffer";
+import { VerifyOffer } from "@/services/verifyOffer/VerifyOffer";
 
 export async function verifyOffers() {
   for (const { id } of await prismaClient.job.findMany({
@@ -13,5 +13,5 @@ export async function verifyOffers() {
       id: true,
     },
   }))
-    await new IgnoreOffer(id).Start();
+    await new VerifyOffer(id).Start();
 }

@@ -2,7 +2,7 @@ import prismaClient from "@/lib/prismaClient";
 import OpenAI from "openai";
 import { schema } from "./schema";
 
-export class IgnoreOffer {
+export class VerifyOffer {
   constructor(private readonly id: bigint) {}
 
   async Start() {
@@ -46,12 +46,6 @@ export class IgnoreOffer {
         messages,
         model: process.env.OPENAI_API_MODEL ?? "gpt-3.5-turbo",
       });
-
-      console.log(
-        JSON.parse(
-          response.choices[0]?.message?.tool_calls?.[0].function.arguments ?? ""
-        )
-      );
 
       const _arguments =
         response.choices[0]?.message?.tool_calls?.[0].function.arguments;

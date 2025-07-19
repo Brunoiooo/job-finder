@@ -1,7 +1,7 @@
 "use server";
 
-import { IgnoreOffer } from "@/services/ignoreOffer/IgnoreOffer";
+import { VerifyOffer } from "@/services/verifyOffer/VerifyOffer";
 
 export async function verifyOffer(id: bigint) {
-  await new IgnoreOffer(id).Start();
+  await new VerifyOffer(id).Start();
 }
