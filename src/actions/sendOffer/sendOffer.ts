@@ -1,7 +1,7 @@
 "use server";
 
 import prismaClient from "@/lib/prismaClient";
-import { SendOfferUseme } from "@/services/sendOffer/sendOfferUseme/SendOfferUseme";
+import { sendOfferRegistry } from "@/services/sendOffer/SendOfferRegistry";
 
 export async function sendOffer(id: bigint) {
   const { source } = await prismaClient.job.findFirstOrThrow({
@@ -16,11 +16,9 @@ export async function sendOffer(id: bigint) {
     },
   });
 
-  switch (source) {
-    case "USEME":
-      await new SendOfferUseme(id).Start();
-      break;
-    default:
-      throw new Error("Source not found.");
-  }
+  const SendOffer = sendOfferRegistry[source];
+
+  if (!SendOffer) throw new Error("Source not found.");
+
+  await new SendOffer(id).Start();
 }
