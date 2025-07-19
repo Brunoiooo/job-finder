@@ -1,6 +1,7 @@
 import { GenerateOffers } from "@/components/generateOffers/GenerateOffers";
 import { JobDataTable } from "@/components/jobDataTable/JobDataTable";
 import { ScrapUseme } from "@/components/scrapUseme/ScrapUseme";
+import { SendOffers } from "@/components/sendOffers/SendOffers";
 import { VerifyOffers } from "@/components/verifyOffers/VerifyOffers";
 import { PrismaClient } from "@prisma/client";
 
@@ -19,14 +20,11 @@ export default async function Home() {
 
   return (
     <div className="grid">
-      <div className="col-3">
+      <div className="col-12 flex flex row gap-5">
         <ScrapUseme />
-      </div>
-      <div className="col-1">
-        <GenerateOffers />
-      </div>
-      <div className="col-1">
         <VerifyOffers />
+        <GenerateOffers />
+        <SendOffers />
       </div>
       <div className="col-12">
         <JobDataTable value={value} />

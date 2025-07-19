@@ -21,21 +21,17 @@ export function ScrapUseme() {
   }, [pages]);
 
   return (
-    <div className="grid">
-      <div className="col-12">
-        <Button className="w-full" loading={loading} onClick={handleScrapUseme}>
-          Scrap Useme
-        </Button>
-      </div>
-      <div className="col-12">
-        <InputNumber
-          className="w-full"
-          value={pages}
-          placeholder="Pages"
-          disabled={loading}
-          onChange={({ value }) => setPages(value ?? 2)}
-        />
-      </div>
-    </div>
+    <>
+      <Button loading={loading} onClick={handleScrapUseme}>
+        Scrap Useme
+      </Button>
+      <InputNumber
+        min={1}
+        value={pages}
+        placeholder="Pages"
+        disabled={loading}
+        onChange={({ value }) => setPages(value ?? 2)}
+      />
+    </>
   );
 }
