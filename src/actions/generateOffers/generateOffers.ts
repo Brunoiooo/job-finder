@@ -6,7 +6,6 @@ import { GenerateOffer } from "@/services/generateOffer/GenerateOffer";
 export async function generateOffers() {
   for (const { id } of await prismaClient.job.findMany({
     where: {
-      offer: null,
       ignored: false,
       sent: false,
     },
