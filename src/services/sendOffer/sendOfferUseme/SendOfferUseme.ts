@@ -52,7 +52,8 @@ export class SendOfferUseme extends SendOffer {
     );
 
     await page.waitForSelector(
-      "body > main > div > form > div.col-12.col-md-8 > div.jobs-summary.job-form > div:nth-child(2) > div > react-text-editor > div > div._rootContentEditableWrapper_yms4a_1097.mdxeditor-root-contenteditable > div:nth-child(1)"
+      "body > main > div > form > div.col-12.col-md-8 > div.jobs-summary.job-form > div:nth-child(2) > div > react-text-editor > div > div._rootContentEditableWrapper_yms4a_1097.mdxeditor-root-contenteditable > div:nth-child(1)",
+      { timeout: 2000 }
     );
     await page.click(
       "body > main > div > form > div.col-12.col-md-8 > div.jobs-summary.job-form > div:nth-child(2) > div > react-text-editor > div > div._rootContentEditableWrapper_yms4a_1097.mdxeditor-root-contenteditable > div:nth-child(1)"

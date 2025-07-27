@@ -4,7 +4,7 @@ import prismaClient from "@/lib/prismaClient";
 import { sendOfferRegistry } from "@/services/sendOffer/SendOfferRegistry";
 
 export async function sendOffers() {
-  for (const { source, id } of await prismaClient.job.findMany({
+  for (const { source } of await prismaClient.job.groupBy({
     where: {
       sent: false,
       ignored: false,
@@ -12,15 +12,28 @@ export async function sendOffers() {
         not: null,
       },
     },
-    select: {
-      id: true,
-      source: true,
-    },
+    by: "source",
   })) {
     const SendOffer = sendOfferRegistry[source];
 
     if (!SendOffer) throw new Error("Source not found.");
 
-    await new SendOffer(id).Start();
+    await new SendOffer().Start(
+      (
+        await prismaClient.job.findMany({
+          where: {
+            sent: false,
+            ignored: false,
+            offer: {
+              not: null,
+            },
+            source,
+          },
+          select: {
+            id: true,
+          },
+        })
+      ).map(({ id }) => id)
+    );
   }
 }

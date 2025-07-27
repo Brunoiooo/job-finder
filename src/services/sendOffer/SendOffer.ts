@@ -2,9 +2,9 @@ import prismaClient from "@/lib/prismaClient";
 import puppeteer, { Page } from "puppeteer";
 
 export abstract class SendOffer {
-  constructor(private readonly id: bigint) {}
+  constructor() {}
 
-  async Start() {
+  async Start(ids: bigint[]) {
     const browser = await puppeteer.launch({
       headless: process.env["DEBUG"] ? false : undefined,
     });
@@ -14,9 +14,11 @@ export abstract class SendOffer {
 
       await this.Login(page);
 
-      const { offer, url } = await prismaClient.job.findFirstOrThrow({
+      for (const { offer, url } of await prismaClient.job.findMany({
         where: {
-          id: this.id,
+          id: {
+            in: ids,
+          },
           offer: {
             not: null,
           },
@@ -25,18 +27,25 @@ export abstract class SendOffer {
           offer: true,
           url: true,
         },
-      });
+      })) {
+        try {
+          if (!offer) throw new Error("offer is null.");
+          await this.Send(page, offer, url);
+        } catch (error) {
+          console.error(
+            error instanceof Error ? error.message : "Coś poszło nie tak..."
+          );
+        }
+      }
 
-      if (!offer) throw new Error("offer does not exist.");
-
-      await this.Send(page, offer, url);
-
-      await prismaClient.job.update({
+      await prismaClient.job.updateMany({
         data: {
           sent: true,
         },
         where: {
-          id: this.id,
+          id: {
+            in: ids,
+          },
         },
       });
     } catch (error) {

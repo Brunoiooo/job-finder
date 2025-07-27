@@ -20,5 +20,5 @@ export async function sendOffer(id: bigint) {
 
   if (!SendOffer) throw new Error("Source not found.");
 
-  await new SendOffer(id).Start();
+  await new SendOffer().Start([id]);
 }
