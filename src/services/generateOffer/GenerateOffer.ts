@@ -41,7 +41,7 @@ export class GenerateOffer {
 
       const response = await new OpenAI().chat.completions.create({
         messages,
-        model: process.env.OPENAI_API_MODEL ?? "gpt-3.5-turbo",
+        model: process.env.OPENAI_API_MODEL ?? 'gpt-5'
       });
 
       if (!response.choices[0].message.content)
