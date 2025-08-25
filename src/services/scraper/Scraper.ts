@@ -6,6 +6,14 @@ export abstract class Scraper {
   async Start() {
     const browser = await puppeteer.launch({
       headless: process.env["DEBUG"] ? false : undefined,
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-blink-features=AutomationControlled",
+        "--lang=pl-PL",
+      ],
+      ignoreDefaultArgs: ["--enable-automation"],
     });
 
     try {
