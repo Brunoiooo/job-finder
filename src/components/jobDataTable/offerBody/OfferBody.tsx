@@ -5,7 +5,7 @@ import { Job } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { PrimeIcons } from "primereact/api";
 import { Button } from "primereact/button";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 interface IProps {
   row: Job;
@@ -14,6 +14,14 @@ interface IProps {
 export function OfferBody({ row }: IProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
+
+  const cleanHtml = useMemo(
+    () =>
+      row.offer
+        ?.replaceAll(/<script/gi, "&lt;script")
+        .replaceAll(/<\/script>/gi, "&lt;/script&gt;"),
+    [row.offer]
+  );
 
   const handleGenerateOffer = useCallback(() => {
     setLoading(true);
@@ -25,7 +33,7 @@ export function OfferBody({ row }: IProps) {
 
   return (
     <>
-      {row.offer && <div dangerouslySetInnerHTML={{ __html: row.offer }}></div>}
+      {cleanHtml && <div dangerouslySetInnerHTML={{ __html: cleanHtml }}></div>}
       <Button
         loading={loading}
         icon={PrimeIcons.SYNC}
